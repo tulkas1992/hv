@@ -1,43 +1,42 @@
 ---
 layout:  /src/layouts/ProjectLayout.astro
-title: 'NeonMint'
+title: 'victor-ruiz-reyes.site'
 pubDate: 2025-04-05
-description: 'NeonMint is a modern, minimalist template crafted for developers and digital creatives.'
-languages: ["astro", "tailwind", "cloudflare", "javascript","vercel"]
+description: ''
+languages: ["react", "tailwind", "javascript", "astro", "preact"]
 image:
-  url: "/images/projects/neonmint.webp"
-  alt: "Thumbnail of Astro arches."
+  url: "#"
+  alt: "Vista previa de Presik.com"
 --- 
 
-**NeonMint** is a modern, minimalist web template created for developers, designers, and digital creatives. This project aims to offer an elegant and functional visual experience, combining a dark-toned aesthetic with mint green accents to highlight content without distractions.
+**Presik.com** es un sitio web moderno desarrollado inicialmente con **React** y **TailwindCSS**, que próximamente migrará a **Astro** con **Preact** para optimizar el rendimiento, mejorar la experiencia de usuario y facilitar la escalabilidad del proyecto. La implementación actual se apoya en **JavaScript** y un enfoque modular para garantizar flexibilidad y mantenimiento a largo plazo.
 
-Developed with **Astro** and styled with **TailwindCSS**, NeonMint focuses on speed, modularity, and a component-centered architecture.
+Este proyecto es el resultado de una colaboración activa entre un equipo de **desarrolladores backend y frontend**, combinando habilidades técnicas y estrategias de diseño para lograr un producto sólido y atractivo.
 
-## 🧩 Features
+## 🧩 Características
 
-- Responsive and minimalist design
-- Dark mode aesthetic with mint green accents
-- Clean and reusable UI components
-- Ideal for portfolios, dashboards or tech landing pages
-- Modern typography and clear visual hierarchy
-- Developed with **Astro**
-- Styled with **TailwindCSS**
+- Diseño moderno y responsivo
+- Construido con **React** y **TailwindCSS**
+- Próxima migración a **Astro** con **Preact**
+- Estructura modular y mantenible
+- Orientado a la optimización de velocidad y SEO
+- Colaboración multidisciplinaria entre backend y frontend
+- Experiencia de usuario enfocada en la claridad y conversión
 
-## 💡 Technologies used
+## 💡 Tecnologías utilizadas
 
-- Astro
+- React
 - TailwindCSS
-- HTML5
 - JavaScript
+- Astro *(próxima implementación)*
+- Preact *(próxima implementación)*
 
+## 🌐 Enlace
 
-## 🌐 Demo
+👉 [Visitar presik.com](https://presik.com) 
 
-👉 [View live demo](https://github.com/EFEELE/NeonMint) 
+## 🎯 Objetivo
 
-## 🎯 Objective
+El objetivo principal de **Presik.com** es **captar leads y mejorar el posicionamiento de marca** a través de un diseño optimizado, un rendimiento sobresaliente y una arquitectura técnica pensada para escalar junto con las necesidades del negocio.
 
-The purpose of NeonMint is to combine style and functionality in a clean interface that enhances content without overwhelming the user. It's an exercise in design and development focused on visual detail and user experience.
-
-
-🚀 *Developed by EFEELE.*
+🚀 *Desarrollado en colaboración con un equipo de backend y frontend.*

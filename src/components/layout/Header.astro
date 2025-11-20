@@ -27,11 +27,19 @@ const navItems = isActiveRoute
     class="relative mx-auto flex max-w-7xl flex-row items-center justify-between max-xl:px-6"
   >
     <a href="/" aria-label="Go to home">
-      <Icon
-        name="logo"
-        class="h-6 cursor-pointer transition-all hover:text-mint-300"
-        aria-hidden="true"
-      />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 100">
+        <defs>
+          <linearGradient id="textGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#a4f4cf"/>
+            <stop offset="100%" stop-color="#d0fbe5"/>
+          </linearGradient>
+        </defs>
+        <text x="0" y="70" font-family="'Fira Code', 'Courier New', monospace"
+              font-size="64" font-weight="700" fill="url(#textGradient)">
+          &lt;VICTOR RUIZ /&gt;
+        </text>
+      </svg>
+      
     </a>
 
     <Navigation items={navItems} />

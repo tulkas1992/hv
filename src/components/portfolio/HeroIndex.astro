@@ -6,15 +6,14 @@ import { Icon } from "astro-icon/components";
 import Hobbies from "../portfolio/Hobbies.astro";
 
 const  {
-  profileImage = "https://media.licdn.com/dms/image/v2/C4D03AQGWYNm_Us0Okg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1540522687476?e=1750291200&v=beta&t=Mq8ZIX2sBW3fAWP-SD-viKKDHwAB2dpAOazeRmgPT0o",
+  profileImage = "/images/profile.webp",
   profileAlt = "Photo of Fernando Aldair López Ponce (EFEELE) for the blog",
   profileLink = "/about-me",
   profileTitle = "FrontEnd Developer",
   profileName = "Victor Ruiz Reyes",
-  githubLink = "https://github.com/EFEELE/NeonMint",
-  githubText = "Do you like this blog's design?",
+  githubLink = "https://github.com/tulkas1992",
   portfolioImage = "/images/portfolio.webp",
-  email = "hello@efeele.dev",
+  email = "hola@victor-ruiz-reyes@site",
 } = Astro.props;;
 ---
 
@@ -37,23 +36,24 @@ const  {
             class="absolute inset-0 h-full w-full rounded-fullfrom-transparent  to-riptide-500 dark:from-transparent  f dark:to-mint-300 animate-rotate-border bg-conic/[from_var(--border-angle)] "
           >
           </div>
-          <div class="relative z-20 flex w-full rounded-full bg-mint-900">
+          <div class="relative z-20 flex w-full rounded-full bg-mint-900 p-1">
             <div
-              class="w-full aspect-square rounded-full bg-center bg-cover"
+              class="w-full aspect-square rounded-full bg-center bg-neutral-800 bg-cover"
               style={`background-image: url(${profileImage})`}
               aria-label="Photo of Fernando Aldair López Ponce (EFEELE) for the blog"
             >
               <a
                 href={profileLink}
-                class="flex h-full w-full"
-                aria-label="View about me page"></a>
+                class="flex h-full w-full  z-10"
+                aria-label="View about me page" />
+              
             </div>
           </div>
         </div>
       </div>
 
       <div
-        class="flex h-full w-7/12 flex-col justify-center gap-4 p-4 max-md:w-full max-md:gap-2"
+        class="flex h-full w-7/12 flex-col justify-center gap-4 p-4 pr-0 max-md:w-full max-md:gap-2"
       >
         <span
           class="relative inline-flex items-center text-xs font-semibold leading-0 dark:text-white text-blacktext max-md:font-medium max-sm:justify-center"
@@ -61,7 +61,7 @@ const  {
           <span
             class="before:mr-2 before:block before:h-1.5 before:w-1.5 before:rounded-full before:bg-green-400 before:shadow-[0px_0px_0px_3px_rgba(34,_197,_94,_0.5)] before:animate-pulse before:content-['']"
           ></span>
-          Available for work
+          Actualmente trabajo en presik.com, aunque estoy abierto a nuevas oportunidades.
         </span>
 
         <h1
@@ -72,26 +72,35 @@ const  {
        <p
   class="mb-0 text-lg font-semibold leading-8 text-blacktext dark:text-gray-200 max-xl:text-base"
 >
-  <span
-    class="bg-gradient-to-r from-riptide-500 to-mint-500 bg-clip-text font-black text-transparent dark:from-riptide-300 dark:to-mint-200"
-    >{profileTitle}</span
-  > con <span
-    class="bg-gradient-to-r from-riptide-500 to-mint-500 bg-clip-text font-black text-transparent dark:from-riptide-300 dark:to-mint-200"
-    >8 años de experiencia</span
-  >, apasionado por el desarrollo, la tecnología y el café que enciende ideas. Me encanta dar vida a proyectos digitales. 🚀☕
+Disfruto crear soluciones que aporten valor. En mi tiempo libre me gustan los videojuegos, el patinaje, el baloncesto y el senderismo.
+<br />
+Tengo más de <b
+  class=" bg-gradient-to-r from-riptide-500 to-mint-500 dark:from-riptide-300 dark:to-mint-200 text-transparent bg-clip-text"
+>9 años de experiencia</b> desarrollando proyectos tecnológicos.
+<br />
+Actualmente trabajo en <b
+  class=" bg-gradient-to-r from-riptide-500 to-mint-500 dark:from-riptide-300 dark:to-mint-200 text-transparent bg-clip-text"
+>Presik</b>, aunque estoy abierto a nuevas oportunidades.
+Aquí puedes ver algunos de mis <b
+  class=" bg-gradient-to-r from-riptide-500 to-mint-500 dark:from-riptide-300 dark:to-mint-200 text-transparent bg-clip-text"
+>desarrollos</b>.
+<b
+  class=" bg-gradient-to-r from-riptide-500 to-mint-500 dark:from-riptide-300 dark:to-mint-200 text-transparent bg-clip-text"
+>¡Échales un vistazo!</b>
+
 </p>
 
 
         <div class="flex gap-4 max-sm:flex-col max-sm:items-center">
           <Button
             link={"mailto:" + email}
-            text="Contact Me"
+            text="Escribeme un Email"
             iconName="envelope"
           />
           <Button
             link={profileLink}
-            text="About Me"
-            iconName="person"
+            text="Mi Whatsapp"
+            iconName="whatsapp"
             variant="dark"
           />
         </div>
@@ -129,7 +138,7 @@ const  {
               class="relative flex h-full flex-col gap-8 p-8 dark:before:[background-image:radial-gradient(circle,_rgba(13,188,130)_0,_rgba(1,45,34)_100%)] before:[background-image:radial-gradient(circle,_rgba(95,255,202)_0,_rgba(144,253,210)_100%)] before:absolute before:left-30 before:bottom-30 before:h-[30%] before:aspect-square before:rounded-full before:blur-3xl before:opacity-90 before:transition before:z-0 max-xl:p-5 max-md:p-4 xl:before:bottom-10"
             >
               <div class="z-2">
-                <Heading text="Do you like this site's design?" level={3}/>
+                <Heading text="Te gustaría conocer alguno de mis repositorios" level={3}/>
               </div>
 
               <Icon
@@ -155,7 +164,7 @@ const  {
             name="dashboard"
             aria-hidden="true"
           />
-          <Heading text="Tech" textGradient="Stack" level={3} />
+          <Heading text="Habilidades" level={3} />
         </div>
         <div class="overflow-y-auto">
           <Tools />
@@ -179,24 +188,25 @@ const  {
             name="code"
             aria-hidden="true"
           />
-          <Heading text="Projects" level={3}/>
+          <Heading text="Proyectos" level={3}/>
         </div>
         <p
-          class="z-2 my-6 text-lg font-semibold leading-6 dark:text-gray-200 text-blacktext max-xl:text-base max-w-[90%] max-md:max-w-[85%]"
+        class="z-2 my-6 text-lg font-semibold leading-6 dark:text-gray-200 text-blacktext max-xl:text-base max-w-[90%] max-md:max-w-[85%]"
+      >
+        Me encanta <span
+          class="bg-gradient-to-r from-riptide-500 to-mint-500 bg-clip-text font-black text-transparent  dark:from-riptide-300 dark:to-mint-200"
+          >convertir ideas en proyectos reales.</span
         >
-          I love <span
-            class="bg-gradient-to-r from-riptide-500 to-mint-500 bg-clip-text font-black text-transparent  dark:from-riptide-300 dark:to-mint-200"
-            >turning ideas into real projects.</span
-          >
-          <br /> Here I show you some of the <span
-            class="bg-gradient-to-r from-riptide-500 to-mint-500 bg-clip-text font-black text-transparent  dark:from-riptide-300 dark:to-mint-200"
-            >developments</span
-          > I've worked on, applying technology, design, and lots of creativity.
-          <span
-            class="bg-gradient-to-r from-riptide-500 to-mint-500  font-black  bg-clip-text text-transparent  dark:from-riptide-300 dark:to-mint-200"
-            >Check them out!</span
-          >
-        </p>
+        <br /> Aquí te muestro algunos de los <span
+          class="bg-gradient-to-r from-riptide-500 to-mint-500 bg-clip-text font-black text-transparent  dark:from-riptide-300 dark:to-mint-200"
+          >desarrollos</span
+        > en los que he trabajado, aplicando tecnología, diseño y mucha creatividad.
+        <span
+          class="bg-gradient-to-r from-riptide-500 to-mint-500  font-black  bg-clip-text text-transparent  dark:from-riptide-300 dark:to-mint-200"
+          >¡Échales un vistazo!</span
+        >
+      </p>
+      
         <img
           class="relative left-0 z-0 mt-40 w-full object-cover transition-all ease-in-out duration-500 group-hover:rotate-2 group-hover:scale-185 max-xl:mt-28 max-lg:mt-10 max-sm:mt-0 max-md:scale-100 max-sm:scale-125 scale-180 max-md:group-hover:scale-105 before:[background-image:radial-gradient(circle,_rgba(13,188,130)_0,_rgba(1,45,34)_100%)] before:absolute before:left-30 before:-bottom-0 before:h-[80%] before:aspect-square before:rounded-full before:blur-3xl before:opacity-80 before:-z-10 before:transition"
           src={portfolioImage}
