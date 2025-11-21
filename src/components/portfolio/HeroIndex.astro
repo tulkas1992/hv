@@ -11,7 +11,7 @@ const  {
   profileLink = "/about-me",
   profileTitle = "FrontEnd Developer",
   profileName = "Victor Ruiz Reyes",
-  githubLink = "https://github.com/tulkas1992",
+  getLinkRick = "https://rickandmorty.victor-ruiz-reyes.site",
   portfolioImage = "/images/portfolio.webp",
   email = "hola@victor-ruiz-reyes@site",
 } = Astro.props;;
@@ -131,19 +131,19 @@ Aquí puedes ver algunos de mis <b
         >
           <a
             target="_blank"
-            href={githubLink}
+            href={getLinkRick}
             aria-label="View this site's code repository on GitHub"
           >
             <div
               class="relative flex h-full flex-col gap-8 p-8 dark:before:[background-image:radial-gradient(circle,_rgba(13,188,130)_0,_rgba(1,45,34)_100%)] before:[background-image:radial-gradient(circle,_rgba(95,255,202)_0,_rgba(144,253,210)_100%)] before:absolute before:left-30 before:bottom-30 before:h-[30%] before:aspect-square before:rounded-full before:blur-3xl before:opacity-90 before:transition before:z-0 max-xl:p-5 max-md:p-4 xl:before:bottom-10"
             >
               <div class="z-2">
-                <Heading text="Te gustaría conocer alguno de mis repositorios" level={3}/>
+                <Heading text="Te muestro mi librería de Rick y Morty, un proyecto personal que desarrollé como hobby." level={5} className="!text-2xl"/>
               </div>
 
               <Icon
                 class="absolute -bottom-10 left-30 size-50 text-mint-500/30 group-hover:animate-pulse ease-in-out max-sm:left-10 max-md:left-30 xl:size-56 xl:-bottom-5 xl:-right-24"
-                name="github"
+                name="rick"
                 aria-hidden="true"
               />
             </div>

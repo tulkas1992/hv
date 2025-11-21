@@ -2,7 +2,7 @@
 interface Props {
     text?: string;
     textGradient?: string;
-    level?: 1 | 2 | 3;
+    level?: 1 | 2 | 3 | 4 | 5 | 6;
     className?: string;
 }
 
@@ -15,6 +15,9 @@ const Tag = `h${level}`;
     "font-extrabold text-4xl max-xl:text-3xl",
     level === 2 && "max-md:text-3xl ",
     level === 3 && "max-md:text-xl ",
+    level === 4 && "text-lg ",
+    level === 5 && "text-md",
+    level === 6 && "text-sm",
     "dark:text-white text-blacktext",
     className
 ]}>
