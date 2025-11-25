@@ -7,7 +7,7 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "victor-ruiz-reyes.info",
+  site: "https://efeele.dev",
   integrations: [preact(), icon(), sitemap()],
 
   vite: {
