@@ -62,10 +62,15 @@ const twitterimage = `${siteUrl}${ogimage.url}`;
     <meta name="twitter:image" content={twitterimage} />
     <meta name="twitter:image:alt" content={ogimage.alt} />
     <meta name="theme-color" content="#0E0E11" />
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BB1XYF97JP"
-    ></script>
-
+      gtag("config", "G-BB1XYF97JP");
+    </script>
   </head>
 
   <body class="overflow-x-hidden">
