@@ -53,6 +53,14 @@ https://ecore.com.co/
 
 
 
+experiencia actual
+
+-----------
+
+Desarrollador - PRESIK SAS (Bucaramanga)
+Contrato indefinido, desde 01/01/2024 hasta la fecha (según certificado laboral expedido el 01/11/2026)
+
+
 skill
 
 -----------
