@@ -1,0 +1,142 @@
+---
+// Filas de habilidades que se desplazan en horizontal, en direcciones alternas,
+// con el mismo desvanecido transparente que el carrusel de proyectos.
+// Se detienen al pasar el mouse y cada cápsula conserva su propio hover.
+import Capsule from "../ui/Capsule.astro";
+import { skillGroups } from "../../utils/skills";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+// Una fila por grupo: Frontend, Backend/CMS y Marketing/nube/IA
+const lines = skillGroups.map((group) => group.items);
+
+// Velocidad distinta por fila para que no avancen sincronizadas
+const durations = [34, 42, 38, 46];
+---
+
+<div class:list={["skills-marquee", className]}>
+  {
+    lines.map((line, r) => (
+      <div class="skills-marquee__row" aria-label={skillGroups[r].name}>
+        <div
+          class:list={["skills-marquee__track", { "is-reverse": r % 2 === 1 }]}
+          style={`--duration:${durations[r % durations.length]}s`}
+        >
+          {[...line, ...line].map((skill, i) => (
+            <div class="skills-marquee__item" aria-hidden={i >= line.length ? "true" : undefined}>
+              <Capsule lang={skill} />
+            </div>
+          ))}
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .skills-marquee {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+    overflow: hidden;
+    /* Desvanecido largo a izquierda y derecha, igual que en el carrusel de proyectos */
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.06) 4%,
+      rgba(0, 0, 0, 0.18) 9%,
+      rgba(0, 0, 0, 0.36) 14%,
+      rgba(0, 0, 0, 0.58) 20%,
+      rgba(0, 0, 0, 0.8) 26%,
+      #000 32%,
+      #000 68%,
+      rgba(0, 0, 0, 0.8) 74%,
+      rgba(0, 0, 0, 0.58) 80%,
+      rgba(0, 0, 0, 0.36) 86%,
+      rgba(0, 0, 0, 0.18) 91%,
+      rgba(0, 0, 0, 0.06) 96%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.06) 4%,
+      rgba(0, 0, 0, 0.18) 9%,
+      rgba(0, 0, 0, 0.36) 14%,
+      rgba(0, 0, 0, 0.58) 20%,
+      rgba(0, 0, 0, 0.8) 26%,
+      #000 32%,
+      #000 68%,
+      rgba(0, 0, 0, 0.8) 74%,
+      rgba(0, 0, 0, 0.58) 80%,
+      rgba(0, 0, 0, 0.36) 86%,
+      rgba(0, 0, 0, 0.18) 91%,
+      rgba(0, 0, 0, 0.06) 96%,
+      transparent 100%
+    );
+  }
+
+  .skills-marquee__row {
+    display: flex;
+    /* Espacio vertical para que el hover de cada cápsula (escala y sombra) no se recorte */
+    padding: 0.3rem 0;
+  }
+
+  .skills-marquee__track {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.45rem;
+    padding-right: 0.45rem;
+    animation: skills-marquee-left var(--duration, 38s) linear infinite;
+    will-change: transform;
+  }
+
+  .skills-marquee__track.is-reverse {
+    animation-name: skills-marquee-right;
+  }
+
+  /* Al pasar el mouse por el bloque, todas las filas se detienen */
+  .skills-marquee:hover .skills-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .skills-marquee__item {
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .skills-marquee__item:hover {
+    transform: translateY(-2px) scale(1.08);
+  }
+
+  .skills-marquee__item :global(span[role="presentation"]) {
+    white-space: nowrap;
+    transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .skills-marquee__item:hover :global(span[role="presentation"]) {
+    box-shadow: 0 8px 20px -8px rgba(99, 102, 241, 0.7);
+  }
+
+  /* El track contiene la fila duplicada: moverlo la mitad de su ancho hace un bucle sin saltos */
+  @keyframes skills-marquee-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes skills-marquee-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skills-marquee__track {
+      animation: none;
+    }
+  }
+</style>

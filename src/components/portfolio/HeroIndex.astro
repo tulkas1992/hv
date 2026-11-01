@@ -1,11 +1,11 @@
 ---
 import Button from "../ui/Button.astro";
 import Heading from "../ui/Heading.astro";
-import Tools from "../portfolio/Tools.astro";
 import { Icon } from "astro-icon/components";
 import Hobbies from "../portfolio/Hobbies.astro";
 import { SITE } from "../../config/site";
 import ProjectsMarquee from "./ProjectsMarquee.astro";
+import SkillsMarquee from "./SkillsMarquee.astro";
 
 const  {
   profileImage = "/images/victor-ruiz-reyes-bucaramanga.jpeg",
@@ -160,7 +160,7 @@ Aquí puedes ver algunos de mis <b
       class="col-span-2 col-start-1 row-start-1 rounded-2xl bg-gradient-to-r from-mint-300 dark:from-mint-600 to-mint-50 dark:to-mint-200/5  hover:to-mint-300/30 dark:hover:to-mint-600/30 p-[.2rem] md:col-start-3"
     >
       <article
-        class="group relative z-0 flex h-full w-full flex-col overflow-hidden rounded-2xl bg-gradient-to-tr from-riptide-100 to-mint-100 p-6 transition hover:shadow-[0_10px_50px_rgba(99,_102,_241,_0.2)] dark:bg-gradient-to-r dark:from-mint-900 dark:to-mint-950 dark:overflow-hidden max-md:p-4 gap-6 max-md:gap-3 max-lg:gap-4 dark:before:[background-image:radial-gradient(circle,_rgba(99,102,241)_0,_rgba(30,27,75)_100%)] before:[background-image:radial-gradient(circle,_rgba(165,180,252)_0,_rgba(199,210,254)_100%)] before:absolute before:left-30 before:-bottom-0 before:h-[80%] before:aspect-square before:rounded-full before:blur-3xl dark:before:opacity-80 before:opacity-30 before:-z-10 before:transition"
+        class="group relative z-0 flex h-full w-full flex-col overflow-hidden rounded-2xl bg-gradient-to-tr from-riptide-100 to-mint-100 p-6 transition hover:shadow-[0_10px_50px_rgba(99,_102,_241,_0.2)] dark:bg-gradient-to-r dark:from-mint-900 dark:to-mint-950 dark:overflow-hidden max-md:p-4 gap-4 max-md:gap-2 max-lg:gap-3 dark:before:[background-image:radial-gradient(circle,_rgba(99,102,241)_0,_rgba(30,27,75)_100%)] before:[background-image:radial-gradient(circle,_rgba(165,180,252)_0,_rgba(199,210,254)_100%)] before:absolute before:left-30 before:-bottom-0 before:h-[80%] before:aspect-square before:rounded-full before:blur-3xl dark:before:opacity-80 before:opacity-30 before:-z-10 before:transition"
       >
         <div class="flex items-center gap-4 max-md:gap-2">
           <Icon
@@ -170,9 +170,10 @@ Aquí puedes ver algunos de mis <b
           />
           <Heading text="Habilidades" level={3} />
         </div>
-        <div class="overflow-y-auto">
-          <Tools />
-        </div>
+        <p class="-mt-3 text-sm font-semibold leading-6 text-blacktext dark:text-gray-200 max-md:mt-0">
+          Mi stack en tres frentes: <span class="bg-gradient-to-r from-riptide-500 to-mint-500 bg-clip-text font-black text-transparent dark:from-riptide-300 dark:to-mint-200">frontend</span>, <span class="bg-gradient-to-r from-riptide-500 to-mint-500 bg-clip-text font-black text-transparent dark:from-riptide-300 dark:to-mint-200">backend y CMS</span>, y <span class="bg-gradient-to-r from-riptide-500 to-mint-500 bg-clip-text font-black text-transparent dark:from-riptide-300 dark:to-mint-200">marketing, nube e IA</span>.
+        </p>
+        <SkillsMarquee class="-mx-6 flex-1 max-md:-mx-4" />
       </article>
     </div>
 
