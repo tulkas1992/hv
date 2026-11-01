@@ -5,19 +5,16 @@ import { getLanguage } from "../../utils/languages";
 interface Props {
   lang: string;
   size?: "xs" | "md";
-  linkEnabled?: boolean;
 }
 
-const { size = "md", lang, linkEnabled = true } = Astro.props as Props;
-console.log(lang);
-
+const { size = "md", lang } = Astro.props as Props;
 
 const baseClasses = {
   container: [
     "flex items-center w-fit",
     "pl-2 pr-2 py-0.5 gap-1",
     "text-sm font-semibold leading-3",
-    "bg-white shadow rounded-full",
+    "bg-white text-blacktext shadow rounded-full cursor-default",
     "transition-all duration-300 ease-in-out hover:bg-zinc-800 hover:text-white",
     "max-sm:pl-1 max-sm:pr-1.5 max-sm:text-xs max-sm:gap-0.5",
   ].join(" "),
@@ -47,43 +44,17 @@ const getIconContainerClasses = () => {
 };
 ---
 
-{
-  linkEnabled ? (
-    <a
-      class="cursor-pointer"
-      href={`/blog/techs/${lang}`}
-      aria-label={`View articles about ${selectedLanguage.name}`}
-      role="link"
-    >
-      <span
-        class={getContainerClasses()}
-        role="presentation"
-        aria-hidden="true"
-      >
-        <div
-          class={getIconContainerClasses()}
-          role="img"
-          aria-label={`${selectedLanguage.name} icon`}
-        >
-          <Icon class="!w-full" name={selectedLanguage.iconName} />
-        </div>
-        {selectedLanguage.name}
-      </span>
-    </a>
-  ) : (
-    <span
-      class={`${getContainerClasses()} cursor-default`}
-      role="presentation"
-      aria-hidden="true"
-    >
-      <div
-        class={getIconContainerClasses()}
-        role="img"
-        aria-label={`${selectedLanguage.name} icon`}
-      >
-        <Icon class="!w-full" name={selectedLanguage.iconName} />
-      </div>
-      {selectedLanguage.name}
-    </span>
-  )
-}
+<span class={getContainerClasses()} role="presentation">
+  <div
+    class={getIconContainerClasses()}
+    role="img"
+    aria-label={`Ícono de ${selectedLanguage.name}`}
+  >
+    <Icon
+      class="!w-full"
+      name={selectedLanguage.iconName}
+      style={selectedLanguage.color ? `color:${selectedLanguage.color}` : undefined}
+    />
+  </div>
+  {selectedLanguage.name}
+</span>

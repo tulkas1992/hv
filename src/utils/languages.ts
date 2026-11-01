@@ -2,6 +2,8 @@ export interface Language {
   name: string;
   iconName: string;
   className?: string;
+  /** Color del ícono cuando el set trae íconos monocromáticos (currentColor) */
+  color?: string;
 }
 
 export const languages: Record<string, Language> = {
@@ -39,7 +41,7 @@ export const languages: Record<string, Language> = {
     iconName: "mysql",
   },
   wordpress: {
-    name: "Wordpress",
+    name: "WordPress",
     iconName: "wordpress",
   },
   node: {
@@ -110,8 +112,98 @@ export const languages: Record<string, Language> = {
     name: "Python",
     iconName: "python",
   },
+  react: {
+    name: "React",
+    iconName: "logos:react",
+  },
+  preact: {
+    name: "Preact",
+    iconName: "logos:preact",
+  },
+  next: {
+    name: "Next.js",
+    iconName: "logos:nextjs-icon",
+    className: "!bg-white",
+  },
+  vite: {
+    name: "Vite",
+    iconName: "logos:vitejs",
+  },
+  jquery: {
+    name: "jQuery",
+    iconName: "simple-icons:jquery",
+    className: "!bg-white",
+    color: "#0769AD",
+  },
+  woocommerce: {
+    name: "WooCommerce",
+    iconName: "logos:woocommerce-icon",
+    className: "!bg-white",
+  },
+  elementor: {
+    name: "Elementor",
+    iconName: "elementor",
+  },
+  shopify: {
+    name: "Shopify",
+    iconName: "logos:shopify",
+    className: "!bg-white",
+  },
+  codeigniter: {
+    name: "CodeIgniter",
+    iconName: "logos:codeigniter-icon",
+    className: "!bg-white",
+  },
+  hubspot: {
+    name: "HubSpot",
+    iconName: "simple-icons:hubspot",
+    className: "!bg-white",
+    color: "#FF7A59",
+  },
+  analytics: {
+    name: "Google Analytics",
+    iconName: "logos:google-analytics",
+    className: "!bg-white",
+  },
+  googleads: {
+    name: "Google Ads",
+    iconName: "logos:google-ads",
+    className: "!bg-white",
+  },
+  digitalocean: {
+    name: "DigitalOcean",
+    iconName: "logos:digital-ocean-icon",
+    className: "!bg-white",
+  },
+  postgres: {
+    name: "PostgreSQL",
+    iconName: "logos:postgresql",
+    className: "!bg-white",
+  },
+  tagmanager: {
+    name: "Google Tag Manager",
+    iconName: "logos:google-tag-manager",
+    className: "!bg-white",
+  },
+  claude: {
+    name: "Claude",
+    iconName: "simple-icons:claude",
+    className: "!bg-white",
+    color: "#D97757",
+  },
+  opencode: {
+    name: "OpenCode",
+    iconName: "simple-icons:opencode",
+    className: "!bg-white",
+    color: "#211E1E",
+  },
+  hermes: {
+    name: "Hermes",
+    iconName: "hermes",
+    className: "!bg-transparent !p-0",
+  },
 };
 
 export const getLanguage = (lang: string): Language => {
-  return languages[lang] || languages.html;
-}; 
+  return languages[lang] || { name: lang, iconName: "code" };
+};
