@@ -5,6 +5,7 @@ import Tools from "../portfolio/Tools.astro";
 import { Icon } from "astro-icon/components";
 import Hobbies from "../portfolio/Hobbies.astro";
 import { SITE } from "../../config/site";
+import ProjectsMarquee from "./ProjectsMarquee.astro";
 
 const  {
   profileImage = "/images/victor-ruiz-reyes-bucaramanga.jpeg",
@@ -13,7 +14,6 @@ const  {
   profileTitle = "Desarrollador Frontend",
   profileName = "Victor Ruiz Reyes",
   getLinkRick = "https://rickandmorty.victor-ruiz-reyes.site",
-  portfolioImage = "/images/portfolio.webp",
   email = SITE.email,
   whatsappLink = SITE.whatsapp,
 } = Astro.props;
@@ -211,14 +211,7 @@ Aquí puedes ver algunos de mis <b
         >
       </p>
       
-        <img
-          class="relative left-0 z-0 mt-40 w-full object-cover transition-all ease-in-out duration-500 group-hover:rotate-2 group-hover:scale-185 max-xl:mt-28 max-lg:mt-10 max-sm:mt-0 max-md:scale-100 max-sm:scale-125 scale-180 max-md:group-hover:scale-105 before:[background-image:radial-gradient(circle,_rgba(99,102,241)_0,_rgba(30,27,75)_100%)] before:absolute before:left-30 before:-bottom-0 before:h-[80%] before:aspect-square before:rounded-full before:blur-3xl before:opacity-80 before:-z-10 before:transition"
-          src={portfolioImage}
-          alt="Collage con capturas de cuatro sitios web desarrollados por Victor: Melhous, CDA La 27, Interpreting Colombia y Le Pit Club."
-          loading="lazy"
-          width="480"
-          height="320"
-        />
+        <ProjectsMarquee class="relative z-0 -mx-8 -mb-8 min-h-[280px] flex-1 max-md:-mx-6 max-md:-mb-6" />
       </article>
     </div>
   </div>

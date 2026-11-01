@@ -1,0 +1,123 @@
+---
+// Columnas de capturas de proyectos que se desplazan en bucle y se desvanecen
+// con un degradado transparente en los bordes del contenedor.
+interface Props {
+  columns?: number;
+  perColumn?: number;
+  class?: string;
+}
+
+const { columns = 3, perColumn = 6, class: className = "" } = Astro.props;
+
+const projects = await Astro.glob("../../pages/portfolio/projects/*.md");
+projects.sort((a, b) => (a.frontmatter.order ?? 999) - (b.frontmatter.order ?? 999));
+
+const images: string[] = projects
+  .map((p) => p.frontmatter.image?.url)
+  .filter((url): url is string => Boolean(url) && url !== "#")
+  .slice(0, columns * perColumn);
+
+// Reparte las imágenes en columnas intercaladas para que cada una mezcle proyectos distintos
+const cols = Array.from({ length: columns }, (_, c) => images.filter((_, i) => i % columns === c));
+
+// Duración y dirección distintas por columna para que el movimiento no se vea sincronizado
+const durations = [38, 46, 42, 50];
+---
+
+<div class:list={["projects-marquee", className]} aria-hidden="true">
+  <div class="projects-marquee__grid" style={`grid-template-columns: repeat(${columns}, minmax(0, 1fr))`}>
+    {
+      cols.map((col, c) => (
+        <div class="projects-marquee__col">
+          <div
+            class:list={["projects-marquee__track", { "is-reverse": c % 2 === 1 }]}
+            style={`--duration:${durations[c % durations.length]}s`}
+          >
+            {[...col, ...col].map((src, i) => (
+              <img
+                src={src}
+                alt=""
+                width="960"
+                height="600"
+                loading={i < 2 ? "eager" : "lazy"}
+                decoding="async"
+                class="projects-marquee__img"
+              />
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .projects-marquee {
+    position: relative;
+    overflow: hidden;
+    /* Desvanecido transparente arriba y abajo: las imágenes entran y salen del contenedor */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  }
+
+  .projects-marquee__grid {
+    position: absolute;
+    inset: -20% -12%;
+    display: grid;
+    gap: 0.9rem;
+    transform: rotate(-8deg) scale(1.05);
+    transition: transform 0.6s ease;
+  }
+
+  :global(.group:hover) .projects-marquee__grid {
+    transform: rotate(-6deg) scale(1.1);
+  }
+
+  .projects-marquee__col {
+    overflow: hidden;
+  }
+
+  .projects-marquee__track {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    animation: projects-marquee-up var(--duration, 40s) linear infinite;
+    will-change: transform;
+  }
+
+  .projects-marquee__track.is-reverse {
+    animation-name: projects-marquee-down;
+  }
+
+  :global(.group:hover) .projects-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .projects-marquee__img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 30px -12px rgba(30, 27, 75, 0.55);
+    outline: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* El track contiene la lista duplicada: moverlo la mitad de su alto hace un bucle sin saltos */
+  @keyframes projects-marquee-up {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-50% - 0.45rem)); }
+  }
+
+  @keyframes projects-marquee-down {
+    from { transform: translateY(calc(-50% - 0.45rem)); }
+    to { transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .projects-marquee__track {
+      animation: none;
+    }
+  }
+</style>
