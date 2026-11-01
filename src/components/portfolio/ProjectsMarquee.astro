@@ -39,7 +39,8 @@ const durations = [38, 46, 42, 50];
                 alt=""
                 width="960"
                 height="600"
-                loading={i < 2 ? "eager" : "lazy"}
+                loading="eager"
+                fetchpriority="low"
                 decoding="async"
                 class="projects-marquee__img"
               />
@@ -55,9 +56,39 @@ const durations = [38, 46, 42, 50];
   .projects-marquee {
     position: relative;
     overflow: hidden;
-    /* Desvanecido transparente arriba y abajo: las imágenes entran y salen del contenedor */
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+    /* Desvanecido transparente en los cuatro bordes: la máscara vertical y la horizontal
+       se intersectan, así las imágenes aparecen y se disuelven suavemente en el contenedor */
+    --fade-v: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.06) 7%,
+      rgba(0, 0, 0, 0.18) 16%,
+      rgba(0, 0, 0, 0.36) 24%,
+      rgba(0, 0, 0, 0.58) 34%,
+      rgba(0, 0, 0, 0.8) 43%,
+      #000 50%,
+      rgba(0, 0, 0, 0.8) 57%,
+      rgba(0, 0, 0, 0.58) 66%,
+      rgba(0, 0, 0, 0.36) 76%,
+      rgba(0, 0, 0, 0.18) 84%,
+      rgba(0, 0, 0, 0.06) 93%,
+      transparent 100%
+    );
+    --fade-h: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.35) 10%,
+      rgba(0, 0, 0, 0.8) 22%,
+      #000 31%,
+      #000 69%,
+      rgba(0, 0, 0, 0.8) 78%,
+      rgba(0, 0, 0, 0.35) 90%,
+      transparent 100%
+    );
+    -webkit-mask-image: var(--fade-v), var(--fade-h);
+    -webkit-mask-composite: source-in;
+    mask-image: var(--fade-v), var(--fade-h);
+    mask-composite: intersect;
   }
 
   .projects-marquee__grid {
@@ -102,6 +133,14 @@ const durations = [38, 46, 42, 50];
     border-radius: 0.75rem;
     box-shadow: 0 10px 30px -12px rgba(30, 27, 75, 0.55);
     outline: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 0.82;
+    filter: saturate(0.9);
+    transition: opacity 0.5s ease, filter 0.5s ease;
+  }
+
+  :global(.group:hover) .projects-marquee__img {
+    opacity: 1;
+    filter: saturate(1.05);
   }
 
   /* El track contiene la lista duplicada: moverlo la mitad de su alto hace un bucle sin saltos */
