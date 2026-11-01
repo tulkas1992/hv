@@ -5,7 +5,7 @@ export const SITE = {
   fullName: "Victor Alfonso Ruiz Reyes",
   title: "Victor Ruiz Reyes | Desarrollador Frontend y Web en Bucaramanga",
   description:
-    "Desarrollador frontend y web master con más de 9 años de experiencia. Creo sitios con React, Astro, Tailwind CSS y WordPress. Mira mis proyectos.",
+    "Más de 9 años creando y administrando sitios y aplicaciones web con React, Astro, Tailwind CSS y WordPress. Mira mis proyectos.",
   jobTitle: "Desarrollador Frontend",
   locale: "es_CO",
   lang: "es-CO",

@@ -12,6 +12,8 @@ Hola, soy **Victor Alfonso Ruiz Reyes**, un amante de la tecnología. Me encanta
 
 ## Mi trayectoria 💻
 
+Mi mayor experiencia está en la **creación y administración de sitios y aplicaciones web**: desde construirlos y ponerlos en línea hasta mantenerlos, actualizarlos, optimizarlos y darles soporte con el tiempo.
+
 Empecé en 2016 como responsable de SEO y soporte técnico en **Nube Tecnológica**, donde también desarrollé y di soporte a sitios en WordPress, PrestaShop y Joomla. Después trabajé como Web Master y líder de desarrollo web en proyectos de agencias como **JLV** y **Bionix / CDALA27**, y desde 2021 desarrollo interfaces con **WordPress y React** en **Graphitech**. Hoy trabajo como desarrollador frontend en **Presik**.
 
 ## Formación 🎓
