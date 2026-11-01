@@ -6,6 +6,7 @@ import Hobbies from "../portfolio/Hobbies.astro";
 import { SITE } from "../../config/site";
 import ProjectsMarquee from "./ProjectsMarquee.astro";
 import SkillsMarquee from "./SkillsMarquee.astro";
+import ProfileAvatar from "./ProfileAvatar.astro";
 
 const  {
   profileImage = "/images/victor-ruiz-reyes-bucaramanga.jpeg",
@@ -30,35 +31,18 @@ const  {
     <div
       class="group relative z-0 flex h-full items-center justify-center gap-8 overflow-hidden rounded-2xl bg-gradient-to-tr from-riptide-100 to-white p-4 transition-all hover:shadow-[0_10px_50px_rgba(99,_102,_241,_0.2)] dark:bg-gradient-to-r dark:from-mint-950 dark:to-zinc-950 dark:overflow-hidden max-md:w-full max-md:gap-3 max-lg:gap-2 max-sm:flex-col dark:before:[background-image:radial-gradient(circle,_rgba(99,102,241)_0,_rgba(30,27,75)_100%)] before:[background-image:radial-gradient(circle,_rgba(165,180,252)_0,_rgba(199,210,254)_100%)] before:absolute before:left-65 before:top-10 before:h-[40%] before:aspect-square before:rounded-full before:blur-3xl before:opacity-80 before:-z-10 before:transition hover:before:animate-pulse"
     >
-      <div class="aspect-square h-4/5 max-md:size-32">
-        <div
-          class="group-hover:scale-105 relative z-10 flex w-full cursor-pointer items-center overflow-hidden rounded-full  dark:p-[1.5px] p-[2px]  transition-all duration-500"
-        >
-          <div
-            class="absolute inset-0 h-full w-full rounded-fullfrom-transparent  to-riptide-500 dark:from-transparent  f dark:to-mint-300 animate-rotate-border bg-conic/[from_var(--border-angle)] "
-          >
-          </div>
-          <div class="relative z-20 flex w-full rounded-full bg-mint-900 p-1">
-            <div
-              class="w-full aspect-square rounded-full bg-center bg-neutral-800 bg-cover"
-              style={`background-image: url(${profileImage})`}
-              aria-label={profileAlt}
-            >
-              <a
-                href={profileLink}
-                class="flex h-full w-full  z-10"
-                aria-label="Ver la página Sobre mí" />
-              
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProfileAvatar
+        src={profileImage}
+        alt={profileAlt}
+        href={profileLink}
+        class="relative z-10 h-[92%] shrink-0 max-md:h-auto max-md:w-40"
+      />
 
       <div
         class="flex h-full w-7/12 flex-col justify-center gap-4 p-4 pr-0 max-md:w-full max-md:gap-2"
       >
         <span
-          class="relative inline-flex items-center text-xs font-semibold leading-0 dark:text-white text-blacktext max-md:font-medium max-sm:justify-center"
+          class="relative inline-flex items-center text-xs font-semibold leading-snug dark:text-white text-blacktext max-md:font-medium max-sm:justify-center max-sm:text-center"
         >
           <span
             class="before:mr-2 before:block before:h-1.5 before:w-1.5 before:rounded-full before:bg-green-400 before:shadow-[0px_0px_0px_3px_rgba(34,_197,_94,_0.5)] before:animate-pulse before:content-['']"

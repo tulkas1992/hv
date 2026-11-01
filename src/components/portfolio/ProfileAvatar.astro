@@ -1,0 +1,278 @@
+---
+// Foto de perfil con anillo de degradado giratorio, halo, órbita de tecnologías,
+// inclinación 3D que sigue al mouse con brillo, flotación suave y revelado de entrada.
+// Todo el movimiento se desactiva con "prefers-reduced-motion".
+import { Icon } from "astro-icon/components";
+import { getLanguage } from "../../utils/languages";
+
+interface Props {
+  src: string;
+  alt: string;
+  href?: string;
+  orbit?: string[];
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  href = "/about-me",
+  orbit = ["react", "astro", "tailwind", "wordpress"],
+  class: className = "",
+} = Astro.props;
+
+const orbitItems = orbit.map((key, i) => ({
+  ...getLanguage(key),
+  // Reparte los íconos en ángulos iguales alrededor del círculo
+  angle: (360 / orbit.length) * i,
+}));
+---
+
+<div class:list={["avatar", className]} data-avatar>
+  <!-- Halo difuminado que gira en sentido contrario al anillo -->
+  <div class="avatar__aura" aria-hidden="true"></div>
+
+  <!-- Órbita de tecnologías -->
+  <div class="avatar__orbit" aria-hidden="true">
+    {
+      orbitItems.map((item) => (
+        <span class="avatar__satellite" style={`--angle:${item.angle}deg`}>
+          <span class:list={["avatar__chip", item.className]}>
+            <Icon name={item.iconName} style={item.color ? `color:${item.color}` : undefined} />
+          </span>
+        </span>
+      ))
+    }
+  </div>
+
+  <a href={href} class="avatar__tilt" aria-label="Ver la página Sobre mí" data-avatar-tilt>
+    <span class="avatar__ring" aria-hidden="true"></span>
+    <span class="avatar__photo">
+      <img
+        src={src}
+        alt={alt}
+        width="640"
+        height="640"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <span class="avatar__sheen" aria-hidden="true"></span>
+    </span>
+  </a>
+</div>
+
+<script>
+  // Inclinación 3D suavizada que sigue al puntero y mueve el brillo
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  document.querySelectorAll<HTMLElement>("[data-avatar]").forEach((root) => {
+    const tilt = root.querySelector<HTMLElement>("[data-avatar-tilt]");
+    if (!tilt || reduce.matches || !window.matchMedia("(pointer: fine)").matches) return;
+
+    let targetX = 0, targetY = 0, x = 0, y = 0, frame = 0;
+
+    const render = () => {
+      x += (targetX - x) * 0.12;
+      y += (targetY - y) * 0.12;
+      tilt.style.setProperty("--rx", `${(-y * 14).toFixed(2)}deg`);
+      tilt.style.setProperty("--ry", `${(x * 14).toFixed(2)}deg`);
+      tilt.style.setProperty("--mx", `${((x + 1) * 50).toFixed(1)}%`);
+      tilt.style.setProperty("--my", `${((y + 1) * 50).toFixed(1)}%`);
+      frame = Math.abs(targetX - x) + Math.abs(targetY - y) > 0.001 ? requestAnimationFrame(render) : 0;
+    };
+    const kick = () => { if (!frame) frame = requestAnimationFrame(render); };
+
+    root.addEventListener("pointermove", (e) => {
+      const r = root.getBoundingClientRect();
+      targetX = ((e.clientX - r.left) / r.width) * 2 - 1;
+      targetY = ((e.clientY - r.top) / r.height) * 2 - 1;
+      root.classList.add("is-active");
+      kick();
+    });
+    root.addEventListener("pointerleave", () => {
+      targetX = 0;
+      targetY = 0;
+      root.classList.remove("is-active");
+      kick();
+    });
+  });
+</script>
+
+<style>
+  .avatar {
+    --ring: 3px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    perspective: 900px;
+  }
+
+  /* Halo de color detrás de la foto */
+  .avatar__aura {
+    position: absolute;
+    inset: 14%;
+    border-radius: 9999px;
+    background: conic-gradient(from 0deg, #6366f1, #a78bfa, #22d3ee, #6366f1);
+    filter: blur(28px);
+    opacity: 0.55;
+    animation: avatar-spin 9s linear infinite reverse;
+  }
+
+  /* Órbita punteada con los íconos */
+  .avatar__orbit {
+    position: absolute;
+    inset: 2%;
+    border-radius: 9999px;
+    border: 1px dashed rgba(165, 180, 252, 0.35);
+    animation: avatar-spin 26s linear infinite;
+  }
+
+  .avatar__satellite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    /* Ubica el ícono en su ángulo y deshace ese giro para que nazca derecho */
+    transform: rotate(var(--angle)) translateX(var(--orbit-r, 48cqi)) rotate(calc(-1 * var(--angle)));
+  }
+
+  .avatar {
+    container-type: inline-size;
+  }
+
+  .avatar__chip {
+    position: absolute;
+    left: -1.05rem;
+    top: -1.05rem;
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0.4rem;
+    border-radius: 9999px;
+    background: #0b0b12;
+    box-shadow: 0 6px 18px -6px rgba(99, 102, 241, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    /* Gira al revés de la órbita para que el ícono quede siempre derecho */
+    animation: avatar-spin 26s linear infinite reverse;
+  }
+
+  .avatar__chip :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Contenedor que se inclina en 3D y flota */
+  .avatar__tilt {
+    position: relative;
+    display: block;
+    width: 80%;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation: avatar-float 6s ease-in-out infinite;
+  }
+
+  .avatar.is-active .avatar__tilt {
+    transition: transform 0.08s linear;
+  }
+
+  /* Anillo de degradado giratorio */
+  .avatar__ring {
+    position: absolute;
+    inset: calc(-1 * var(--ring));
+    border-radius: 9999px;
+    background: conic-gradient(
+      from var(--border-angle),
+      transparent 0deg,
+      #6366f1 70deg,
+      #a78bfa 140deg,
+      #e0e7ff 180deg,
+      transparent 220deg,
+      transparent 360deg
+    );
+    animation: avatar-ring 4s linear infinite;
+    box-shadow: 0 0 24px -4px rgba(99, 102, 241, 0.6);
+  }
+
+  .avatar__photo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 9999px;
+    background: #1e1b4b;
+    box-shadow: inset 0 0 0 4px #1e1b4b;
+    /* Revelado circular al cargar */
+    animation: avatar-reveal 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .avatar__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.04);
+    transition: transform 0.6s ease;
+  }
+
+  .avatar.is-active .avatar__photo img {
+    transform: scale(1.1);
+  }
+
+  /* Brillo que sigue al puntero */
+  .avatar__sheen {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at var(--mx, 30%) var(--my, 20%),
+      rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0) 45%
+    );
+    mix-blend-mode: soft-light;
+    opacity: 0.6;
+    transition: opacity 0.4s ease;
+  }
+
+  .avatar.is-active .avatar__sheen {
+    opacity: 1;
+  }
+
+  @keyframes avatar-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* --border-angle está registrado con @property en global.css, por eso se puede animar */
+  @keyframes avatar-ring {
+    to { --border-angle: 360deg; }
+  }
+
+  @keyframes avatar-float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -6px; }
+  }
+
+  @keyframes avatar-reveal {
+    from { clip-path: circle(0% at 50% 50%); filter: blur(8px); }
+    to { clip-path: circle(50% at 50% 50%); filter: blur(0); }
+  }
+
+  /* En pantallas pequeñas la órbita no cabe: se queda solo el anillo y el halo */
+  @container (max-width: 180px) {
+    .avatar__orbit { display: none; }
+    .avatar__tilt { width: 92%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .avatar__aura,
+    .avatar__orbit,
+    .avatar__chip,
+    .avatar__tilt,
+    .avatar__ring,
+    .avatar__photo {
+      animation: none;
+    }
+  }
+</style>
