@@ -48,6 +48,20 @@
   initial-value: 0deg;
 }
 
+/* Fade-in al hacer scroll: la clase la agrega src/scripts/reveal.js */
+.reveal {
+	opacity: 0;
+	translate: 0 18px;
+	transition:
+		opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0ms),
+		translate 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+	opacity: 1;
+	translate: 0 0;
+}
+
 ::selection {
 	@apply text-white bg-mint-500;
 	
