@@ -44,4 +44,4 @@ fix: corregir enlace de WhatsApp en el hero
 docs: crear CLAUDE.md del proyecto
 ```
 
-Las líneas de atribución que pida el entorno (por ejemplo `Co-Authored-By:`) van al final, después de una línea en blanco; no cuentan como parte de la frase.
+Los commits no llevan líneas de atribución ni menciones de IA (`Co-Authored-By:`, "Generated with…"). Ver el skill `commit-no-ai`.
