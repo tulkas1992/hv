@@ -9,9 +9,9 @@ import ListPosts from "../components/blog/ListPosts.astro";
 import NavigationArticles from "../components/layout/NavigationArticles.astro";
 import Share from "../components/ui/Share.astro";
 const { frontmatter } = Astro.props;
-const currentUrl = `https://efeele.dev${Astro.url.pathname}`;
+const currentUrl = `https://victor-ruiz-reyes.site${Astro.url.pathname}`;
 const tweetText = encodeURIComponent(
-  `"${frontmatter.title}" - by ${frontmatter.author} | EFEELE`,
+  `"${frontmatter.title}" - by ${frontmatter.author} | Victor Ruiz Reyes`,
 );
 import Heading from "../components/ui/Heading.astro";
 ---
@@ -94,9 +94,9 @@ import Heading from "../components/ui/Heading.astro";
         >
           <div class="white flex items-center gap-4">
             <div
-              aria-label="Photo of Fernando Aldair López Ponce (EFEELE) for the blog"
+              aria-label="Foto de perfil de Victor Alfonso Ruiz Reyes"
               class="size-10 bg-cover bg-center rounded-full drop-shadow-lg"
-              style="background-image: url(/images/efeeleprofile.webp);"
+              style="background-image: url(/images/victor-ruiz-reyes-bucaramanga.jpeg);"
             >
             </div>
             <a

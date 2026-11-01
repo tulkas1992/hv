@@ -1,0 +1,59 @@
+---
+import ExperienceItem from "./ExperienceItem.astro";
+const EDUCATION = [
+  {
+    title: "Tecnólogo en Desarrollo de Sistemas",
+    company: "S.E.N.A",
+    description: "Formación tecnológica en análisis, diseño y desarrollo de software.",
+  },
+  {
+    title: "Activate (Google)",
+    company: "Google",
+    description: "Formación en marketing digital.",
+  },
+  {
+    title: "Curso de Analítica Web",
+    company: "S.E.N.A",
+    description: "Medición y análisis del comportamiento de usuarios en sitios web.",
+  },
+  {
+    title: "Curso React JS",
+    company: "PRAXIS",
+    description: "Desarrollo de interfaces web con React.",
+  },
+  {
+    title: "Curso React Native",
+    company: "PRAXIS",
+    description: "Desarrollo de aplicaciones móviles con React Native.",
+  },
+  {
+    title: "Inglés A2",
+    company: "PRAXIS",
+    description: "Nivel básico de inglés.",
+  },
+  {
+    title: "Bachiller Académico",
+    company: "Colegio Departamental Balbino García",
+    date: "2006 - 2012",
+  },
+];
+---
+
+<div class="relative max-md:mt-0 mt-8" aria-label="Education">
+  <ol class="relative mt-10">
+    {
+      EDUCATION.map((study, index) => (
+        <li>
+          <article role="article" aria-labelledby={`education-title-${index}`}>
+            <div
+              class="flex flex-col gap-2 text-zinc-00 dark:text-zinc-300 md:col-span-3"
+              aria-describedby={`education-title-${index}`}
+            >
+              <ExperienceItem {...study} />
+            </div>
+          </article>
+        </li>
+      ))
+    }
+  </ol>
+</div>
