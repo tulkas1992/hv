@@ -1,9 +1,11 @@
 ---
 layout:  /src/layouts/ProjectLayout.astro
-title: 'presik.com'
-pubDate: 2025-04-05
-description: ''
-languages: ["react", "tailwind", "javascript"]
+title: 'Presik'
+order: 1
+category: "Sitio corporativo"
+url: "https://www.presik.com/"
+description: "Sitio corporativo de Presik, software ERP, CRM y MRP, construido con React y Tailwind CSS por el equipo frontend y backend."
+languages: ["react", "tailwind", "javascript", "analytics"]
 image:
   url: "/images/projects/presik.png"
   alt: "Vista previa de Presik.com"

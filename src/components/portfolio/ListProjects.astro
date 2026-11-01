@@ -1,61 +1,124 @@
 ---
 import Project from "./Project.astro";
-const allPosts = await Astro.glob("../../pages/portfolio/projects/*.md");
-// Sort by descending date (most recent first)
-allPosts.sort(
-  (a, b) =>
-    new Date(b.frontmatter.pubDate).getTime() -
-    new Date(a.frontmatter.pubDate).getTime(),
+const allProjects = await Astro.glob("../../pages/portfolio/projects/*.md");
+// Sort by the manual `order` field (lowest first)
+allProjects.sort(
+  (a, b) => (a.frontmatter.order ?? 999) - (b.frontmatter.order ?? 999),
 );
+
+const categories = [
+  ...new Set(allProjects.map((p) => p.frontmatter.category).filter(Boolean)),
+].sort();
+
+const INITIAL_VISIBLE = 9;
 ---
 
-<section class="relative pt-8 pb-32 max-2xl:px-8 max-md:pt-4">
+<section class="relative pt-8 pb-24 max-2xl:px-8 max-md:px-4 max-md:pt-4">
   <div class="mx-auto max-w-7xl py-8">
     <slot />
   </div>
 
   <div
-    id="containerProjects"
-    class="mx-auto max-w-7xl grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-5 p-2 py-4 max-h-[150vh] overflow-hidden transition-[max-height] duration-500 ease-in-out"
+    class="mx-auto max-w-7xl flex flex-wrap justify-center gap-2 pb-8"
+    role="toolbar"
+    aria-label="Filtrar proyectos por categoría"
   >
+    <button class="project-filter is-active" data-filter="all" aria-pressed="true">
+      Todos <span class="opacity-60">{allProjects.length}</span>
+    </button>
     {
-      allPosts.map((post) => (
-        <Project
-          url={post.url}
-          title={post.frontmatter.title}
-          description={post.frontmatter.description}
-          date={post.frontmatter.pubDate}
-          languages={post.frontmatter.languages}
-          image={post.frontmatter.image}
-        />
+      categories.map((category) => (
+        <button class="project-filter" data-filter={category} aria-pressed="false">
+          {category}{" "}
+          <span class="opacity-60">
+            {allProjects.filter((p) => p.frontmatter.category === category).length}
+          </span>
+        </button>
       ))
     }
   </div>
 
   <div
-    id="moreProjects"
-    class="absolute bottom-0 left-0 w-full flex justify-center text-center bg-gradient-to-t from-[#FBFEFD] dark:from-[#0e0e10] from-55% to-transparent to-100% pb-30 pt-52"
+    id="containerProjects"
+    class="mx-auto max-w-7xl grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-6"
   >
-    <button
-      class="absolute font-bold cursor-pointer text-mint-400 dark:text-mint-100 hover:text-mint-500 dark:hover:text-mint-300 transition-all"
-    >
-      View More Projects...
-    </button>
+    {
+      allProjects.map((project, index) => (
+        <div
+          class:list={["project-item", { hidden: index >= INITIAL_VISIBLE }]}
+          data-category={project.frontmatter.category}
+        >
+          <Project
+            url={project.url}
+            title={project.frontmatter.title}
+            description={project.frontmatter.description}
+            category={project.frontmatter.category}
+            languages={project.frontmatter.languages}
+            image={project.frontmatter.image}
+          />
+        </div>
+      ))
+    }
   </div>
+
+  {
+    allProjects.length > INITIAL_VISIBLE && (
+      <div class="mt-10 flex justify-center">
+        <button
+          id="moreProjects"
+          class="rounded-full border border-mint-500/40 px-6 py-3 font-bold text-mint-600 dark:text-mint-200 hover:bg-mint-500 hover:text-white dark:hover:bg-mint-500 transition-all cursor-pointer"
+        >
+          Ver todos los proyectos ({allProjects.length})
+        </button>
+      </div>
+    )
+  }
 </section>
 
-<script>
-  document.querySelector("#moreProjects")?.addEventListener("click", () => {
-    const contenedor = document.querySelector("#containerProjects") as HTMLElement;
-    const moreprojects = document.querySelector("#moreProjects");
+<script define:vars={{ INITIAL_VISIBLE }}>
+  const items = [...document.querySelectorAll(".project-item")];
+  const filters = [...document.querySelectorAll(".project-filter")];
+  const more = document.querySelector("#moreProjects");
+  let expanded = false;
+  let current = "all";
 
-    if (contenedor && moreprojects) {
-      // Use a very large max height to show all content
-      contenedor.style.maxHeight = "15000px";
-      // Hide the view more button
-      setTimeout(() => {
-        moreprojects.classList.add("hidden");
-      }, 5000);
-    }
+  const render = () => {
+    let shown = 0;
+    items.forEach((item) => {
+      const matches = current === "all" || item.dataset.category === current;
+      // When filtering by category, show every match; otherwise respect the "ver todos" state
+      const visible = matches && (expanded || current !== "all" || shown < INITIAL_VISIBLE);
+      item.classList.toggle("hidden", !visible);
+      if (visible) shown++;
+    });
+    more?.parentElement?.classList.toggle("hidden", expanded || current !== "all");
+  };
+
+  filters.forEach((button) => {
+    button.addEventListener("click", () => {
+      current = button.dataset.filter;
+      filters.forEach((b) => {
+        const active = b === button;
+        b.classList.toggle("is-active", active);
+        b.setAttribute("aria-pressed", String(active));
+      });
+      render();
+    });
+  });
+
+  more?.addEventListener("click", () => {
+    expanded = true;
+    render();
   });
 </script>
+
+<style>
+  @reference "../../styles/global.css";
+
+  .project-filter {
+    @apply cursor-pointer rounded-full border border-black/10 bg-white px-4 py-1.5 text-sm font-semibold text-blacktext transition-all hover:border-mint-400 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-mint-400;
+  }
+  .project-filter.is-active {
+    @apply border-mint-500 bg-mint-500 text-white dark:border-mint-400 dark:bg-mint-500 dark:text-white;
+  }
+</style>
