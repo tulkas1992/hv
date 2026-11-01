@@ -3,43 +3,34 @@ import Navigation from "./Navigation.astro";
 import ThemeIcon from "../ui/ThemeIcon.astro";
 import Social from "../ui/Social.astro";
 import { Icon } from "astro-icon/components";
+import { SITE } from "../../config/site";
 
-const currentPath = Astro.url.pathname;
-const routes = ["/", "/portfolio", "/about-me", ]; 
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const routes = ["/", "/portfolio", "/about-me"];
 
-const github = "https://github.com/tulkas1992";
-const linkedin = "https://www.linkedin.com/in/efeele/";
+const { github, linkedin } = SITE;
 
 // Check if the current route is in the list of routes
 const isActiveRoute = routes.includes(currentPath);
 
-const navItems = isActiveRoute 
-  ? ["home", "experience", "projects", "about", "blog",]
-  : ["home", "blog", "about"]; // Change the items
+const navItems = isActiveRoute
+  ? ["home", "experience", "projects", "about"]
+  : ["home", "about"];
 ---
 
 <header
   role="banner"
-  aria-label="Main navigation"
+  aria-label="Navegación principal"
   class="sticky top-0 z-50 w-full p-4 font-medium text-blacktext dark:text-zinc-300 dark:bg-[#0E0E11]/80 dark:border-b-1 dark:border-zinc-800 bg-white/90 backdrop-blur-xs dark:backdrop-blur-xs max-md:z-50 max-md:px-0 transition-all"
 >
   <div
     class="relative mx-auto flex max-w-7xl flex-row items-center justify-between max-xl:px-6"
   >
-    <a href="/" aria-label="Go to home">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 100">
-        <defs>
-          <linearGradient id="textGradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#c7d2fe"/>
-            <stop offset="100%" stop-color="#e0e7ff"/>
-          </linearGradient>
-        </defs>
-        <text x="0" y="70" font-family="'Fira Code', 'Courier New', monospace"
-              font-size="64" font-weight="700" fill="url(#textGradient)">
-          &lt;VICTOR RUIZ /&gt;
-        </text>
-      </svg>
-      
+    <a href="/" aria-label="Ir al inicio" class="group flex items-center gap-3 shrink-0">
+      <Icon name="logo" class="size-9 transition-transform group-hover:rotate-6" aria-hidden="true" />
+      <span class="text-lg font-black leading-none tracking-tight text-blacktext dark:text-white max-sm:hidden">
+        Victor <span class="bg-gradient-to-r from-mint-500 to-riptide-500 dark:from-mint-300 dark:to-riptide-300 bg-clip-text text-transparent">Ruiz</span>
+      </span>
     </a>
 
     <Navigation items={navItems} />
@@ -47,17 +38,14 @@ const navItems = isActiveRoute
     <div class="flex items-center justify-between gap-5 text-xl">
       <div class="max-md:hidden flex items-center justify-center gap-5" role="list">
         <Social link={github} iconName="github" />
-        <Social
-          link={linkedin}
-          iconName="linkedin"
-        />
+        {linkedin && <Social link={linkedin} iconName="linkedin" />}
       </div>
     </div>
     <div class="flex items-center gap-5 text-xl md:pl-5">
       <ThemeIcon />
       <button 
         class="hamburger"
-        aria-label="Open menu"
+        aria-label="Abrir menú"
         aria-expanded="false"
         aria-controls="mobile-menu"
       >

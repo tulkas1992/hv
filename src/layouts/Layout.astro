@@ -3,24 +3,110 @@ import "../styles/global.css";
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import { SITE, absoluteUrl } from "../config/site";
+
+interface Props {
+  pageTitle?: string;
+  description?: string;
+  ogimage?: { url: string; alt: string };
+  /** "website" para páginas normales, "profile" para el inicio/sobre mí, "article" para proyectos */
+  type?: "website" | "profile" | "article";
+  noindex?: boolean;
+  /** Migas de pan: [{ name, path }] sin incluir el inicio */
+  breadcrumbs?: { name: string; path: string }[];
+  /** Nodos JSON-LD extra (por ejemplo CreativeWork en un proyecto) */
+  schema?: Record<string, unknown>[];
+}
+
 const {
-  pageTitle = "Victor Ruiz Reyes | Desarrollador web 🚀",
-  description = "Hola soy Victor y me encanta desarrollar sitios y aplicaciones web",
+  pageTitle = SITE.title,
+  description = SITE.description,
   ogimage = {
-    url: "/images/imagedefault.webp",
-    alt: "Imagen por defecto de Victor Ruiz Reyes",
+    url: SITE.ogImage,
+    alt: `${SITE.name}, desarrollador frontend y web en ${SITE.city}`,
   },
+  type = "website",
+  noindex = false,
+  breadcrumbs = [],
+  schema = [],
 } = Astro.props;
 
-const siteUrl = new URL(Astro.url).origin;
-const SEO = {
-  sitename: "Victor Alfonso Ruiz Reyes | Programador Web",
-  url: siteUrl,
-  locale: "co_CO",
-  author: "Victor Ruiz Reyes",
+// URL canónica con barra final, coherente con el sitemap
+let path = Astro.url.pathname;
+if (!path.endsWith("/")) path += "/";
+const canonical = absoluteUrl(path);
+const imageUrl = absoluteUrl(ogimage.url);
+
+const personId = `${SITE.url}/#person`;
+const websiteId = `${SITE.url}/#website`;
+const sameAs = [SITE.github, SITE.linkedin, SITE.instagram, SITE.youtube].filter(Boolean);
+
+const person = {
+  "@type": "Person",
+  "@id": personId,
+  name: SITE.name,
+  alternateName: SITE.fullName,
+  jobTitle: SITE.jobTitle,
+  description: SITE.description,
+  url: SITE.url,
+  image: absoluteUrl(SITE.profileImage),
+  email: SITE.email,
+  sameAs,
+  knowsAbout: SITE.knowsAbout,
+  knowsLanguage: ["es", "en"],
+  worksFor: { "@type": "Organization", name: SITE.employer.name, url: SITE.employer.url },
+  alumniOf: { "@type": "EducationalOrganization", name: "SENA" },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: SITE.city,
+    addressRegion: SITE.region,
+    addressCountry: SITE.country,
+  },
 };
 
-const twitterimage = `${siteUrl}${ogimage.url}`;
+const website = {
+  "@type": "WebSite",
+  "@id": websiteId,
+  url: SITE.url,
+  name: SITE.name,
+  inLanguage: SITE.lang,
+  publisher: { "@id": personId },
+};
+
+const webpage = {
+  "@type": type === "profile" ? "ProfilePage" : "WebPage",
+  "@id": `${canonical}#webpage`,
+  url: canonical,
+  name: pageTitle,
+  description,
+  inLanguage: SITE.lang,
+  isPartOf: { "@id": websiteId },
+  about: { "@id": personId },
+  primaryImageOfPage: { "@type": "ImageObject", url: imageUrl },
+  ...(type === "profile" ? { mainEntity: { "@id": personId } } : {}),
+};
+
+const crumbs =
+  breadcrumbs.length > 0
+    ? {
+        "@type": "BreadcrumbList",
+        itemListElement: [{ name: "Inicio", path: "/" }, ...breadcrumbs].map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.name,
+          item: absoluteUrl(c.path),
+        })),
+      }
+    : null;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [person, website, webpage, ...(crumbs ? [crumbs] : []), ...schema],
+};
+
+const robots = noindex
+  ? "noindex, nofollow"
+  : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 ---
 
 <html
@@ -29,52 +115,81 @@ const twitterimage = `${siteUrl}${ogimage.url}`;
 >
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
-    <!-- Favicon for different platforms -->
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" href="/favicon.ico" sizes="16x16" />
-    <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="icon" href="/android-chrome-192x192.png" sizes="192x192" />
-    <link rel="icon" href="/android-chrome-512x512.png" sizes="512x512" /> -->
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE.name} />
+    <meta name="robots" content={robots} />
+    <meta name="googlebot" content={robots} />
+    <meta name="application-name" content={SITE.name} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0E0E11" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="generator" content={Astro.generator} />
 
-    <!-- Web manifest -->
+    <!-- Canonical e idioma -->
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={SITE.lang} href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap-index.xml" />
+
+    <!-- Íconos y manifest -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <meta name="description" content={description} />
-    <meta name="author" content={SEO.author} />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href} />
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
+    <meta property="og:type" content={type === "article" ? "article" : type === "profile" ? "profile" : "website"} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={SITE.locale} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={twitterimage} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
     <meta property="og:image:alt" content={ogimage.alt} />
-    <meta property="og:url" content={SEO.url} />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={SEO.sitename} />
-    <meta property="og:locale" content={SEO.locale} />
+    {type === "profile" && <meta property="profile:first_name" content="Victor" />}
+    {type === "profile" && <meta property="profile:last_name" content="Ruiz Reyes" />}
 
-    <!-- Twitter Cards -->
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={twitterimage} />
+    <meta name="twitter:image" content={imageUrl} />
     <meta name="twitter:image:alt" content={ogimage.alt} />
-    <meta name="theme-color" content="#0E0E11" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ERC5BYJFS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-2ERC5BYJFS');
-</script>
+    <!-- Datos estructurados -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
+    <!-- Rendimiento: fuente única, conexiones tempranas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${SITE.gaId}`}></script>
+    <script is:inline define:vars={{ gaId: SITE.gaId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", gaId);
+    </script>
   </head>
 
   <body class="overflow-x-hidden">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-mint-500 focus:px-4 focus:py-2 focus:font-bold focus:text-white"
+      >Saltar al contenido</a
+    >
     <SpeedInsights />
     <div class="blur-circle"></div>
     <div
@@ -84,9 +199,9 @@ const twitterimage = `${siteUrl}${ogimage.url}`;
     </div>
     <Header />
 
-    <div class="min-h-[85vh]">
+    <main id="main" class="min-h-[85vh]">
       <slot />
-    </div>
+    </main>
 
     <Footer />
     <script>

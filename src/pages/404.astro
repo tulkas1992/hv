@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Heading from "../components/ui/Heading.astro";
+---
+
+<Layout
+  pageTitle="Página no encontrada | Victor Ruiz Reyes"
+  description="La página que buscas no existe o cambió de lugar."
+  noindex
+>
+  <section class="mx-auto flex max-w-2xl flex-col items-center gap-6 px-8 py-24 text-center">
+    <p class="text-7xl font-black text-mint-500">404</p>
+    <Heading text="Esta página" textGradient="no existe" level={1} />
+    <p class="text-lg text-zinc-600 dark:text-zinc-300">
+      Puede que el enlace haya cambiado o que el proyecto ya no esté publicado.
+    </p>
+    <a
+      href="/"
+      class="rounded-full bg-mint-500 px-6 py-3 font-bold text-white transition-all hover:bg-mint-600"
+      >Volver al inicio</a
+    >
+  </section>
+</Layout>

@@ -5,17 +5,12 @@ import HeroIndex from "../components/portfolio/HeroIndex.astro";
 import Contact from "../components/portfolio/Contact.astro";
 import ListProjects from "../components/portfolio/ListProjects.astro";
 import { Icon } from "astro-icon/components";
-const pageTitle = "Victor Ruiz Reyes | Frontend Developer";
-const description = "Soy Victor Ruiz Reyes, desarrollador frontend enfocado en el diseño y la usabilidad. Aquí puedes explorar mis proyectos y ver cómo puedo convertir tus ideas en soluciones web de calidad.";
-const ogimage = {
-  url: "https://media.licdn.com/dms/image/v2/C4D03AQGWYNm_Us0Okg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1540522687476?e=1750291200&v=beta&t=Mq8ZIX2sBW3fAWP-SD-viKKDHwAB2dpAOazeRmgPT0o",
-  alt: "Foto de perfil de Victor Ruiz Reyes, desarrollador frontend.",
-};
+import { SITE } from "../config/site";
 import Heading from "../components/ui/Heading.astro";
 import Education from "../components/portfolio/Education.astro";
 ---
 
-<Layout pageTitle={pageTitle} description={description} ogimage={ogimage}>
+<Layout type="profile">
   <HeroIndex />
 
   <section

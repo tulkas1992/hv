@@ -1,19 +1,46 @@
 ---
 import Layout from "./Layout.astro";
-import DatePub from "../components/blog/DatePub.astro";
 import Capsule from "../components/ui/Capsule.astro";
 import Heading from "../components/ui/Heading.astro";
 import NavArticle from "../components/layout/NavArticle.astro";
 import Contact from "../components/portfolio/Contact.astro";
+import { SITE, absoluteUrl } from "../config/site";
+import { getLanguage } from "../utils/languages";
 const { frontmatter } = Astro.props;
 
+const slug = Astro.url.pathname.replace(/\/$/, "").split("/").pop();
+const pagePath = `/portfolio/projects/${slug}/`;
+const pageTitle = `${frontmatter.title}: proyecto web de ${SITE.name}`;
+const techs = frontmatter.languages.map((l: string) => getLanguage(l).name).join(", ");
+const fullDescription = `${frontmatter.description} Tecnologías: ${techs}.`;
+// Google corta las descripciones a ~160 caracteres: se omite la lista de tecnologías si no cabe
+const description = fullDescription.length <= 160 ? fullDescription : frontmatter.description;
+
+const project = {
+  "@type": "CreativeWork",
+  "@id": `${absoluteUrl(pagePath)}#project`,
+  name: frontmatter.title,
+  description: frontmatter.description,
+  url: frontmatter.url ?? absoluteUrl(pagePath),
+  image: absoluteUrl(frontmatter.image.url),
+  genre: frontmatter.category,
+  keywords: frontmatter.languages.map((l: string) => getLanguage(l).name).join(", "),
+  inLanguage: SITE.lang,
+  creator: { "@id": `${SITE.url}/#person` },
+};
 ---
 
 
 <Layout
-  pageTitle={frontmatter.title}
-  description={frontmatter.description}
+  pageTitle={pageTitle}
+  description={description}
   ogimage={frontmatter.image}
+  type="article"
+  breadcrumbs={[
+    { name: "Proyectos", path: "/#projects" },
+    { name: frontmatter.title, path: pagePath },
+  ]}
+  schema={[project]}
 >
   <section
     class="relative mx-auto px-8 max-sm:px-4 flex flex-row justify-center gap-6"
@@ -26,16 +53,29 @@ const { frontmatter } = Astro.props;
         <div class="flex gap-2 flex-wrap">
           {
             frontmatter.languages.map((language: string) => (
-              <Capsule linkEnabled={false} lang={language} />
+              <Capsule lang={language} />
             ))
           }
         </div>
         
-        <DatePub date={frontmatter.pubDate} />
+        {frontmatter.category && (
+          <span class="w-fit rounded-full bg-mint-50 px-3 py-1 text-sm font-bold text-mint-700 dark:bg-mint-950 dark:text-mint-200">
+            {frontmatter.category}
+          </span>
+        )}
 
         <Heading text={frontmatter.title} />
 
-      
+        {frontmatter.url && (
+          <a
+            href={frontmatter.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-fit rounded-full bg-mint-500 px-5 py-2 font-bold text-white transition-all hover:bg-mint-600"
+          >
+            Visitar sitio ↗
+          </a>
+        )}
       </header>
 
       <figure>
@@ -44,7 +84,7 @@ const { frontmatter } = Astro.props;
             <img
               class="w-full rounded-xl"
               src={frontmatter.image.url}
-              alt={frontmatter.image.alt || "Article image"}
+              alt={frontmatter.image.alt || "Imagen del proyecto"}
             />
           )
         }

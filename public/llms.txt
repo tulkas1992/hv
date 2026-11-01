@@ -1,0 +1,24 @@
+# Victor Ruiz Reyes
+
+> Portafolio de Victor Ruiz Reyes, desarrollador frontend y web master de Bucaramanga, Colombia, con más de 9 años de experiencia en agencias digitales. Actualmente trabaja en Presik SAS. Desarrolla sitios y aplicaciones con React, Astro, Tailwind CSS, WordPress y WooCommerce, y trabaja SEO y analítica web.
+
+## Páginas principales
+
+- [Inicio y portafolio](https://victor-ruiz-reyes.site/): presentación, experiencia, estudios, habilidades y proyectos filtrables por categoría.
+- [Sobre mí](https://victor-ruiz-reyes.site/about-me/): trayectoria profesional, formación y objetivos.
+
+## Proyectos destacados
+
+- [Presik](https://victor-ruiz-reyes.site/portfolio/projects/presik/): sitio corporativo de software ERP, CRM y MRP (React, Tailwind CSS).
+- [Talentu](https://victor-ruiz-reyes.site/portfolio/projects/talentu/): plataforma de talento humano (React).
+- [Melhous](https://victor-ruiz-reyes.site/portfolio/projects/melhous/): sitio hotelero con reservas.
+- [CDA La 27](https://victor-ruiz-reyes.site/portfolio/projects/cda-la-27/): centro de diagnóstico automotor (WordPress, WooCommerce, Elementor).
+
+## Contacto
+
+- Correo: vr24355@gmail.com
+- GitHub: https://github.com/tulkas1992
+
+## Más
+
+- [Sitemap](https://victor-ruiz-reyes.site/sitemap-index.xml)

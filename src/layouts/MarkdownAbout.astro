@@ -21,6 +21,8 @@ const { frontmatter } = Astro.props;
   pageTitle={frontmatter.title}
   description={frontmatter.description}
   ogimage={frontmatter.image}
+  type="profile"
+  breadcrumbs={[{ name: "Sobre mí", path: "/about-me/" }]}
 >
   <section
     class="w-full px-8 mt-5 max-sm:px-4 py-4 flex flex-row justify-center gap-6"
@@ -45,12 +47,12 @@ const { frontmatter } = Astro.props;
               <div class="relative z-20 flex w-full rounded-full bg-mint-900">
                 <div
                   class="w-full aspect-square rounded-full bg-[url(/images/victor-ruiz-reyes-bucaramanga.jpeg)] bg-center bg-cover"
-                  aria-label="Foto de perfil de Victor Alfonso Ruiz Reyes"
+                  role="img" aria-label="Foto de perfil de Victor Alfonso Ruiz Reyes"
                 >
                   <a
                     href="/about-me"
                     class="flex h-full w-full"
-                    aria-label="View about me page"></a>
+                    aria-label="Ver mi perfil"></a>
                 </div>
               </div>
             </div>
@@ -58,26 +60,19 @@ const { frontmatter } = Astro.props;
 
           <div class="w-full flex flex-col justify-center gap-4 max-md:gap-2">
             <div class="text-center">
-              <Heading textGradient="Victor Ruiz Reyes" />
+              <Heading textGradient="Victor Ruiz Reyes" level={2} />
             </div>
 
             <p
               class="text-lg max-xl:text-base text-blacktext dark:text-gray-200 mb-0 leading-8 font-semibold"
             >
-              <b
-                class="bg-gradient-to-r from-riptide-400 to-mint-500 dark:to-mint-200 dark:from-riptide-300 text-transparent bg-clip-text"
-                >Frontend Developer</b
-              > with <b
-                class="bg-gradient-to-r from-riptide-400 to-mint-500 dark:to-mint-200 dark:from-riptide-300 text-transparent bg-clip-text"
-                >8 years of experience</b
-              >, passionate about development, technology, and coffee that
-              sparks ideas. I love bringing digital projects to life. 🚀☕
+              <b class="bg-gradient-to-r from-riptide-400 to-mint-500 dark:to-mint-200 dark:from-riptide-300 text-transparent bg-clip-text">Desarrollador Frontend</b> con <b class="bg-gradient-to-r from-riptide-400 to-mint-500 dark:to-mint-200 dark:from-riptide-300 text-transparent bg-clip-text">más de 9 años de experiencia</b>, apasionado por el desarrollo, la tecnología y las ideas que se vuelven proyectos reales. 🚀
             </p>
           </div>
         </div>
       </div>
       <div class="flex gap-4 items-center">
-        <Heading text="About" textGradient="me" />
+        <Heading text="Sobre" textGradient="mí" />
       </div>
 
       <div class="markdown text-white" id="content">
@@ -90,7 +85,7 @@ const { frontmatter } = Astro.props;
     <div class="flex flex-col gap-8 pt-8 max-w-4xl mx-auto">
       <div class="flex gap-4 items-center justify-center">
         <Icon class="text-3xl text-white" name="briefcase" />
-        <Heading text="Experience" textGradient="Work" level={2} />
+        <Heading text="Experiencia" textGradient="Laboral" level={2} />
       </div>
 
       <Experience />
@@ -100,7 +95,7 @@ const { frontmatter } = Astro.props;
     <div class="flex flex-col gap-8 max-w-3xl justify-center mx-auto">
       <div class="flex gap-4 items-center justify-center">
         <Icon class="text-3xl text-white" name="dashboard" />
-        <Heading text="Stack" textGradient="Technological" level={2} />
+        <Heading text="Stack" textGradient="Tecnológico" level={2} />
       </div>
       <Tools variant="center" />
     </div>
