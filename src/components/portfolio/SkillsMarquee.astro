@@ -93,6 +93,7 @@ const durations = [34, 42, 38, 46];
     gap: 0.45rem;
     padding-right: 0.45rem;
     animation: skills-marquee-left var(--duration, 38s) linear infinite;
+    animation-play-state: paused;
     will-change: transform;
   }
 
@@ -100,9 +101,9 @@ const durations = [34, 42, 38, 46];
     animation-name: skills-marquee-right;
   }
 
-  /* Al pasar el mouse por el bloque, todas las filas se detienen */
+  /* El movimiento solo corre mientras el mouse está sobre el bloque */
   .skills-marquee:hover .skills-marquee__track {
-    animation-play-state: paused;
+    animation-play-state: running;
   }
 
   .skills-marquee__item {
