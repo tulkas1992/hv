@@ -111,11 +111,22 @@ const robots = noindex
 
 <html
   lang="es"
-  class="dark:bg-[#0E0E11] bg-mint-50/5 font-montserrat scroll-smooth"
+  class="dark dark:bg-[#0E0E11] bg-mint-50/5 font-montserrat scroll-smooth"
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Modo oscuro por defecto. Este script bloquea el render (sin "defer" ni
+      "type=module") y corre antes del primer pintado, así que no hay parpadeo
+      de claro a oscuro. Solo pasa a claro si el visitante ya lo eligió antes;
+      el modo claro se ignora la preferencia del sistema a propósito.
+    -->
+    <script is:inline>
+      if (localStorage.getItem("theme") === "light") {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE.name} />
