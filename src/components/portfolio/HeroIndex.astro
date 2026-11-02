@@ -2,7 +2,6 @@
 import Button from "../ui/Button.astro";
 import Heading from "../ui/Heading.astro";
 import { Icon } from "astro-icon/components";
-import Hobbies from "../portfolio/Hobbies.astro";
 import { SITE } from "../../config/site";
 import ProjectsMarquee from "./ProjectsMarquee.astro";
 import SkillsMarquee from "./SkillsMarquee.astro";
@@ -58,17 +57,9 @@ const  {
        <p
   class="mb-0 text-lg font-semibold leading-8 text-blacktext dark:text-gray-200 max-xl:text-base"
 >
-Disfruto crear soluciones que aporten valor. En mi tiempo libre me gustan los videojuegos, el patinaje, el baloncesto y el senderismo.
-<br />
-Tengo más de <b
+Disfruto crear soluciones que aporten valor. Tengo más de <b
   class=" bg-gradient-to-r from-riptide-500 to-mint-500 dark:from-riptide-300 dark:to-mint-200 text-transparent bg-clip-text"
 >9 años de experiencia</b> en la creación y administración de sitios y aplicaciones web.
-<br />
-Actualmente trabajo en <b
-  class=" bg-gradient-to-r from-riptide-500 to-mint-500 dark:from-riptide-300 dark:to-mint-200 text-transparent bg-clip-text"
->Presik</b> y me gustaría implementar las nuevas tecnologías en una empresa como <b
-  class=" bg-gradient-to-r from-riptide-500 to-mint-500 dark:from-riptide-300 dark:to-mint-200 text-transparent bg-clip-text"
->ATC</b>.
 Aquí puedes ver algunos de mis <b
   class=" bg-gradient-to-r from-riptide-500 to-mint-500 dark:from-riptide-300 dark:to-mint-200 text-transparent bg-clip-text"
 >desarrollos</b>.
@@ -99,19 +90,7 @@ Aquí puedes ver algunos de mis <b
     class="mx-auto grid max-w-7xl grid-cols-2 grid-rows-4 max-sm:gap-3 gap-4 max-md:h-[80vh] max-sm:h-[900px] max-xl:h-[550px] xl:h-[700px] md:grid-cols-4 md:grid-rows-2"
   >
     <div
-      class="col-start-2 row-start-2 flex flex-col gap-3 rounded-2xl border border-mint-50 bg-gradient-to-r from-riptide-200 to-mint-200 p-8 dark:border-zinc-800 dark:border-2 dark:bg-zinc-800 dark:bg-gradient-radial dark:from-riptide-500 dark:to-mint-500 max-md:gap-0 max-xl:p-5 max-md:p-4 max-lg:gap-1 md:col-start-4"
-    >
-      <div class="flex flex-col-reverse items-start gap-4 max-md:gap-2">
-        <Heading text="Más allá del código" level={3} />
-      </div>
-
-      <div class="overflow-y-auto">
-        <Hobbies />
-      </div>
-    </div>
-
-    <div
-      class="col-start-1 row-start-2 rounded-2xl bg-gradient-to-r from-mint-300 dark:from-mint-600 to-mint-50 dark:to-mint-200/5 hover:to-mint-300/30 dark:hover:to-mint-600/30 p-[.2rem] transition-all ease-in duration-150 hover:scale-105 hover:shadow-[0_20px_50px_rgba(99,_102,_241,_0.4)] z-40 md:col-start-3"
+      class="col-span-2 col-start-1 row-start-2 rounded-2xl bg-gradient-to-r from-mint-300 dark:from-mint-600 to-mint-50 dark:to-mint-200/5 hover:to-mint-300/30 dark:hover:to-mint-600/30 p-[.2rem] transition-all ease-in duration-150 hover:scale-105 hover:shadow-[0_20px_50px_rgba(99,_102,_241,_0.4)] z-40 md:col-start-3"
     >
       <div class="h-full w-full overflow-hidden rounded-2xl dark:bg-zinc-900">
         <div
@@ -120,14 +99,17 @@ Aquí puedes ver algunos de mis <b
           <a
             target="_blank"
             href={getLinkRick}
-            aria-label="Ver el repositorio del sitio en GitHub"
+            aria-label="Ver el proyecto de Rick y Morty"
           >
             <div
-              class="relative flex h-full flex-col gap-8 p-8 dark:before:[background-image:radial-gradient(circle,_rgba(99,102,241)_0,_rgba(30,27,75)_100%)] before:[background-image:radial-gradient(circle,_rgba(165,180,252)_0,_rgba(199,210,254)_100%)] before:absolute before:left-30 before:bottom-30 before:h-[30%] before:aspect-square before:rounded-full before:blur-3xl before:opacity-90 before:transition before:z-0 max-xl:p-5 max-md:p-4 xl:before:bottom-10"
+              class="relative flex h-full flex-col gap-2 p-8 dark:before:[background-image:radial-gradient(circle,_rgba(99,102,241)_0,_rgba(30,27,75)_100%)] before:[background-image:radial-gradient(circle,_rgba(165,180,252)_0,_rgba(199,210,254)_100%)] before:absolute before:left-30 before:bottom-30 before:h-[30%] before:aspect-square before:rounded-full before:blur-3xl before:opacity-90 before:transition before:z-0 max-xl:p-5 max-md:p-4 xl:before:bottom-10"
             >
               <div class="z-2">
-                <Heading text="Te muestro mi librería de Rick y Morty, un proyecto personal que desarrollé como hobby." level={5} className="!text-[13px] !leading-snug max-md:!text-xs"/>
+                <Heading text="Librería de Rick y Morty" level={5} className="!text-base max-md:!text-sm"/>
               </div>
+              <p class="z-2 max-w-[80%] text-xs font-semibold leading-snug text-blacktext dark:text-gray-200 max-md:max-w-[75%]">
+                Proyecto personal que consume la API pública de Rick y Morty para explorar personajes del show: puedes buscarlos, filtrarlos por estado o especie y ver su información detallada (episodios, origen, ubicación actual) en tarjetas con su imagen oficial.
+              </p>
 
               <Icon
                 class="pointer-events-none absolute -bottom-6 -right-4 size-28 text-mint-500/30 group-hover:animate-pulse ease-in-out max-md:-bottom-5 max-md:size-20"
